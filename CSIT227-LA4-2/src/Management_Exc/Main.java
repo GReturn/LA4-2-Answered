@@ -2,6 +2,7 @@ package Management_Exc;
 
 import java.util.List;
 import java.util.NoSuchElementException;
+import java.util.Objects;
 
 public class Main {
 
@@ -21,17 +22,17 @@ public class Main {
         Employee e = null;
 
         for(Person p : persons) {
-            if(p.getName() == manager && !(p instanceof Manager)) throw new ClassCastException("name is not a/n " + Manager.class.getSimpleName());
-            if(p instanceof Manager && p.getName() == manager) m = (Manager) p;
+            if(Objects.equals(p.getName(), manager) && !(p instanceof Manager)) throw new ClassCastException(String.format("%s is not a %s", manager, Manager.class.getSimpleName().toLowerCase()));
+            if(p instanceof Manager && Objects.equals(p.getName(), manager)) m = (Manager) p;
         }
-        if(m == null) throw new NoSuchElementException("“name does not exist");
+        if(m == null) throw new NoSuchElementException(String.format("%s does not exist", manager));
 
         // get employee
         for(Person p : persons) {
-            if(p.getName() == employee && !(p instanceof Employee)) throw new ClassCastException("name is not a/n " + Employee.class.getSimpleName());
-            if(p instanceof Employee && p.getName() == employee) e = (Employee) p;
+            if(Objects.equals(p.getName(), employee) && !(p instanceof Employee)) throw new ClassCastException(String.format("%s is not an %s", employee, Employee.class.getSimpleName().toLowerCase()));
+            if(p instanceof Employee && Objects.equals(p.getName(), employee)) e = (Employee) p;
         }
-        if(e == null) throw new NoSuchElementException("“name does not exist");
+        if(e == null) throw new NoSuchElementException(String.format("%s does not exist", employee));
 
         m.giveRaise(e, salary);
     }
@@ -51,17 +52,17 @@ public class Main {
         Developer d = null;
 
         for(Person p : persons) {
-            if(p.getName() == manager && !(p instanceof Manager)) throw new ClassCastException("name is not a/n " + Manager.class.getSimpleName());
-            if(p instanceof Manager && p.getName() == manager) m = (Manager) p;
+            if(Objects.equals(p.getName(), manager) && !(p instanceof Manager)) throw new ClassCastException(String.format("%s is not a %s", manager, Manager.class.getSimpleName().toLowerCase()));
+            if(p instanceof Manager && Objects.equals(p.getName(), manager)) m = (Manager) p;
         }
-        if(m == null) throw new NoSuchElementException("“name does not exist");
+        if(m == null) throw new NoSuchElementException(String.format("%s does not exist", manager));
 
         // get employee
         for(Person p : persons) {
-            if(p.getName() == developer && !(p instanceof Developer)) throw new ClassCastException("name is not a/n " + Developer.class.getSimpleName());
-            if(p instanceof Employee && p.getName() == developer) d = (Developer) p;
+            if(Objects.equals(p.getName(), developer) && !(p instanceof Developer)) throw new ClassCastException(String.format("%s is not a %s", developer, Developer.class.getSimpleName().toLowerCase()));
+            if(p instanceof Employee && Objects.equals(p.getName(), developer)) d = (Developer) p;
         }
-        if(d == null) throw new NoSuchElementException("“name does not exist");
+        if(d == null) throw new NoSuchElementException(String.format("%s does not exist", developer));
 
         d.setProjectManager(m);
     }
@@ -76,6 +77,22 @@ public class Main {
      * @throws NoSuchElementException when given customer or employee is not in the list of persons
      */
     public static String customerSpeak(List<Person> persons, String customer, String employee) {
-        return null;
+        Customer c = null;
+        Employee e = null;
+
+        for(Person p : persons) {
+            if(Objects.equals(p.getName(), customer) && !(p instanceof Customer)) throw new ClassCastException(String.format("%s is not a %s", customer, Customer.class.getSimpleName().toLowerCase()));
+            if(p instanceof Customer && Objects.equals(p.getName(), customer)) c = (Customer) p;
+        }
+        if(c == null) throw new NoSuchElementException(String.format("%s does not exist", customer));
+
+        // get employee
+        for(Person p : persons) {
+            if(Objects.equals(p.getName(), employee) && !(p instanceof Employee)) throw new ClassCastException(String.format("%s is not an %s", employee, Employee.class.getSimpleName().toLowerCase()));
+            if(p instanceof Employee && Objects.equals(p.getName(), employee)) e = (Employee) p;
+        }
+        if(e == null) throw new NoSuchElementException(String.format("%s does not exist", employee));
+
+        return c.speak(e);
     }
 }

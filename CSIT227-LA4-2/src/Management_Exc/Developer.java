@@ -17,11 +17,11 @@ public class Developer extends Employee {
      * @param projectManager to be added as project manager
      * @throws IllegalStateException when this developer already has a project manager
      */
-    protected void setProjectManager(Manager projectManager) throws IllegalStateException{
-        if(projectManager != null) {
-            throw new IllegalStateException("name already has a manager: " + projectManager);
-        }
-        this.projectManager = projectManager;
+    protected void setProjectManager(Manager projectManager) throws IllegalStateException {
+        if(this.projectManager == null)
+            this.projectManager = projectManager;
+        else
+            throw new IllegalStateException(String.format("%s already has a manager: %s", this.getName(), this.getProjectManager().getName()));
     }
 
     public void removePM() {
